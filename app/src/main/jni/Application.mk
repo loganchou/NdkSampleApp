@@ -1,0 +1,2 @@
+APP_MODULES := NdkSampleApp
+APP_ABI := x86_64
