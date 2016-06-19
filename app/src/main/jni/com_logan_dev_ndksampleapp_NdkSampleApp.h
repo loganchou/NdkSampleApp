@@ -9,11 +9,43 @@ extern "C" {
 #endif
 /*
  * Class:     com_logan_dev_ndksampleapp_NdkSampleApp
- * Method:    getString
+ * Method:    getHtml
  * Signature: (Ljava/lang/String;)Ljava/lang/String;
  */
-JNIEXPORT jstring JNICALL Java_com_logan_dev_ndksampleapp_NdkSampleApp_getString
+JNIEXPORT jstring JNICALL Java_com_logan_dev_ndksampleapp_NdkSampleApp_getHtml
   (JNIEnv *, jclass, jstring);
+
+/*
+ * Class:     com_logan_dev_ndksampleapp_NdkSampleApp
+ * Method:    invertBooleans
+ * Signature: ([Z)[Z
+ */
+JNIEXPORT jbooleanArray JNICALL Java_com_logan_dev_ndksampleapp_NdkSampleApp_invertBooleans
+  (JNIEnv *, jclass, jbooleanArray);
+
+/*
+ * Class:     com_logan_dev_ndksampleapp_NdkSampleApp
+ * Method:    sortBytes
+ * Signature: ([B)[B
+ */
+JNIEXPORT jbyteArray JNICALL Java_com_logan_dev_ndksampleapp_NdkSampleApp_sortBytes
+  (JNIEnv *, jclass, jbyteArray);
+
+/*
+ * Class:     com_logan_dev_ndksampleapp_NdkSampleApp
+ * Method:    concatCharsToString
+ * Signature: ([C)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_logan_dev_ndksampleapp_NdkSampleApp_concatCharsToString
+  (JNIEnv *, jclass, jcharArray);
+
+/*
+ * Class:     com_logan_dev_ndksampleapp_NdkSampleApp
+ * Method:    sortInts
+ * Signature: ([I)I
+ */
+JNIEXPORT jint JNICALL Java_com_logan_dev_ndksampleapp_NdkSampleApp_sortInts
+  (JNIEnv *, jclass, jintArray);
 
 #ifdef __cplusplus
 }

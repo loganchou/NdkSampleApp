@@ -2,6 +2,7 @@ package com.logan.dev.ndksampleapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,9 +29,18 @@ public class MainActivity extends AppCompatActivity {
         btnGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = txtUrl.getText().toString();
 
-                txtContent.setText(NdkSampleApp.getString(url));
+                boolean[] booleans = { true, false, false, true };
+                booleans = NdkSampleApp.invertBooleans(booleans);
+
+                byte[] bytes = { 22, 2, 32, 12 };
+                bytes = NdkSampleApp.sortBytes(bytes);
+
+//                String url = txtUrl.getText().toString();
+//                Log.d("NdkSampleApp", "start ndk");
+//                txtContent.setText(NdkSampleApp.getHtml(url));
+
+
             }
         });
 
