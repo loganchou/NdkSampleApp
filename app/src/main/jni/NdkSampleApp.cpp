@@ -42,7 +42,9 @@ JNIEXPORT jstring JNICALL Java_com_logan_dev_ndksampleapp_NdkSampleApp_getHtml
     catString = (char*) malloc(strlen(c_url) + 3);
     sprintf(catString, "{%s}", c_url);
 
-    return env->NewStringUTF(catString);
+    jstring ret = env->NewStringUTF(catString);
+    free(catString);
+    return ret;
 }
 
 /*
