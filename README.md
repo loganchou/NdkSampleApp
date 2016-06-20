@@ -1,6 +1,6 @@
-NDK sample project
+#NDK sample project
 
-#How to create and build jni with NDK on Android Studio 
+##How to create and build jni with NDK on Android Studio 
 1. use [command+,] to open Preferences，than select External Tools
 2. add javah, ndk-build, ndk-build clean as External Tools
   - Configure javah  
