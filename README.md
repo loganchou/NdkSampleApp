@@ -3,7 +3,8 @@ NDK sample project
 #How to create and build jni with NDK on Android Studio 
 1. use [command+,] to open Preferences，than select External Tools
 2. add javah, ndk-build, ndk-build clean as External Tools
-  - Configure javah 
+  - Configure javah
+  
     name: javah
     options: select all
     Show in: select all
@@ -12,6 +13,7 @@ NDK sample project
     Working directory: $SourcepathEntry$/../jin
 
   - Configure ndk-build
+  
     name: ndk-build
     options: select all
     Show in: select all
@@ -48,8 +50,10 @@ NDK sample project
   }
 
 4. add one line in 'gradle.properties'
+  ```
   android.useDeprecatedNdk=true
-
+  ```
+    
 5. Create some MakeFiles
   - Application.mk
     ```
@@ -58,12 +62,12 @@ NDK sample project
     ```
     
   - Android.mk
- 　``` makefile
+    ```
     LOCAL_PATH := $(call my-dir)
     include $(CLEAR_VARS)
     LOCAL_MODULE := YourLibrary
     LOCAL_SRC_FILES =: YourLibrary.cpp
     include $(BUILD_SHARED_LIBRARY)
-    ``` 
+    ```
  
  
