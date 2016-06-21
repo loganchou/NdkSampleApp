@@ -94,7 +94,7 @@ JNIEXPORT jbyteArray JNICALL Java_com_logan_dev_ndksampleapp_NdkSampleApp_sortBy
     int i, j;
     LOGD("input values :");
     for (i = 0; i < len; i++)
-        LOGD("[%d] -> ", elems[i]);
+        LOGD("[%d] -> [%d]",i , elems[i]);
     LOGD("end.");
 
     for (i = 0; i < len - 1; i++)
@@ -104,7 +104,7 @@ JNIEXPORT jbyteArray JNICALL Java_com_logan_dev_ndksampleapp_NdkSampleApp_sortBy
 
     LOGD("output values :");
     for (i = 0; i < len; i++)
-        LOGD("[%d] -> ", elems[i]);
+        LOGD("[%d] -> [%d]",i , elems[i]);
     LOGD("end.");
 
     env->ReleaseByteArrayElements(values, elems, 0);
@@ -132,6 +132,8 @@ JNIEXPORT jstring JNICALL Java_com_logan_dev_ndksampleapp_NdkSampleApp_concatCha
 JNIEXPORT jintArray JNICALL Java_com_logan_dev_ndksampleapp_NdkSampleApp_sortInts
   (JNIEnv *env, jclass cls, jintArray values) {
 
+    LOGD("sortInts↓↓↓↓↓↓↓↓↓↓start↓↓↓↓↓↓↓↓↓↓");
+
     jint* pCIntArr;
     jsize len;
 
@@ -147,7 +149,7 @@ JNIEXPORT jintArray JNICALL Java_com_logan_dev_ndksampleapp_NdkSampleApp_sortInt
     int i, j;
     LOGD("input values :");
     for (i = 0; i < len; i++)
-        LOGD("[%d] -> ", *(pCIntArr + i));
+        LOGD("[%d] -> [%d]",i , *(pCIntArr + i));
     LOGD("end.");
 
     for (i = 0; i < len - 1; i++)
@@ -157,7 +159,7 @@ JNIEXPORT jintArray JNICALL Java_com_logan_dev_ndksampleapp_NdkSampleApp_sortInt
 
     LOGD("output values :");
     for (i = 0; i < len; i++)
-        LOGD("[%d] -> ", pCIntArr[i]);
+        LOGD("[%d] -> [%d]", i, pCIntArr[i]);
     LOGD("end.");
 
     jintArray ret = env->NewIntArray(len);
@@ -167,5 +169,95 @@ JNIEXPORT jintArray JNICALL Java_com_logan_dev_ndksampleapp_NdkSampleApp_sortInt
     env->ReleaseIntArrayElements(ret, elems, 0);
     free(pCIntArr);
 
+    LOGD("sortInts↑↑↑↑↑↑↑↑↑↑end↑↑↑↑↑↑↑↑↑↑");
+
     return ret;
+}
+
+/*
+ * Class:     com_logan_dev_ndksampleapp_NdkSampleApp
+ * Method:    callJavaStaticMethod
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_logan_dev_ndksampleapp_NdkSampleApp_callJavaStaticMethod
+  (JNIEnv *env, jclass cls) {
+
+    LOGD("callJavaStaticMethod↓↓↓↓↓↓↓↓↓↓start↓↓↓↓↓↓↓↓↓↓");
+
+    jstring str_arg = NULL;
+    // 1. find class via classpath
+    jclass clazz = env->FindClass("com/logan/dev/ndksampleapp/CallbackMethod");
+    if (clazz == NULL) {
+        LOGD("can't find class->CallbackMethod");
+        return;
+    }
+
+    // 2. get static method from class
+    jmethodID staticMethodId = env->GetStaticMethodID(clazz, "callbackStaticMethod", "(Ljava/lang/String;I)V");
+    if (staticMethodId == NULL) {
+        LOGD("can't find StaticMethod->callbackStaticMethod");
+        return;
+    }
+
+    // 3. invoke static method
+    jstring paramStr = env->NewStringUTF("I'm static method.");
+    jint paramInt = 100;
+    env->CallStaticVoidMethod(clazz, staticMethodId, paramStr, paramInt);
+
+    // 4. release the reference
+    env->DeleteLocalRef(clazz);
+    env->DeleteLocalRef(paramStr);
+
+    LOGD("callJavaStaticMethod↑↑↑↑↑↑↑↑↑↑end↑↑↑↑↑↑↑↑↑↑");
+}
+
+/*
+ * Class:     com_logan_dev_ndksampleapp_NdkSampleApp
+ * Method:    callJavaInstaceMethod
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_logan_dev_ndksampleapp_NdkSampleApp_callJavaInstaceMethod
+  (JNIEnv *env, jclass cls) {
+
+    LOGD("callJavaInstaceMethod↓↓↓↓↓↓↓↓↓↓start↓↓↓↓↓↓↓↓↓↓");
+
+    // 1、find class via classpath
+    jclass clazz = env->FindClass("com/logan/dev/ndksampleapp/CallbackMethod");  
+    if (clazz == NULL) {  
+        LOGD("can't find class->CallbackMethod.");
+        return;  
+    }  
+
+    // 2. get construct id
+    jmethodID midConstruct = env->GetMethodID(clazz, "<init>","()V");
+    if (midConstruct == NULL) {
+        LOGD("can't find construct method.");
+        return;  
+    }  
+
+    // 3. get instance method from class
+    jmethodID midInstance = env->GetMethodID(clazz, "callbackInstanceMethod", "(Ljava/lang/String;I)V");
+    if (midInstance == NULL) {
+        LOGD("can't find instance method.");
+        return;  
+    }  
+
+    // 4. create instance
+    jobject jObj = env->NewObject(clazz, midConstruct);
+    if (jObj == NULL) {
+        printf("can't create instance.");
+        return;  
+    }  
+
+    // 5. invoke instance method
+    jstring paramStr = env->NewStringUTF("I'm instance method.");
+    jint paramInt = 200;
+    env->CallVoidMethod(jObj, midInstance, paramStr, paramInt);
+
+    // 6. release the reference
+    env->DeleteLocalRef(clazz);  
+    env->DeleteLocalRef(jObj);
+    env->DeleteLocalRef(paramStr);
+
+    LOGD("callJavaInstaceMethod↑↑↑↑↑↑↑↑↑↑end↑↑↑↑↑↑↑↑↑↑");
 }

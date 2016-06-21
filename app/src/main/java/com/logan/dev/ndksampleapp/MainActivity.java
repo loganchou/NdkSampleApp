@@ -39,6 +39,11 @@ public class MainActivity extends AppCompatActivity {
                 int[] ints = { 22, 2, 32, 12 };
                 ints = NdkSampleApp.sortInts(ints);
 
+                NdkSampleApp.callJavaStaticMethod();
+
+                NdkSampleApp.callJavaInstaceMethod();
+
+
 //                String url = txtUrl.getText().toString();
 //                Log.d("NdkSampleApp", "start ndk");
 //                txtContent.setText(NdkSampleApp.getHtml(url));
