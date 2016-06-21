@@ -13,7 +13,7 @@ android {
 
         ndk {
             moduleName "NdkApp" // define name of NDK library
-            //ldLibs "log"      // add log lib
+            ldLibs "log"      // add log lib
             stl "stlport_static"
         }
     }

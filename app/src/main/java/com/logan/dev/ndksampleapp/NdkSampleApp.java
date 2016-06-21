@@ -32,6 +32,6 @@ public class NdkSampleApp {
      * @param values int array
      * @return sorted int array
      */
-    public static native int sortInts(int[] values);
+    public static native int[] sortInts(int[] values);
 
 }

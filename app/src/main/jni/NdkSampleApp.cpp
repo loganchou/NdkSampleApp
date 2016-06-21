@@ -39,7 +39,7 @@ JNIEXPORT jstring JNICALL Java_com_logan_dev_ndksampleapp_NdkSampleApp_getHtml
     env->ReleaseStringUTFChars(url, c_url);
 
     char *catString;
-    catString = (char*) malloc(strlen(c_url) + 3);
+    catString = (char*) malloc(sizeof(char) * (strlen(c_url) + 3));
     sprintf(catString, "{%s}", c_url);
 
     jstring ret = env->NewStringUTF(catString);
@@ -129,7 +129,43 @@ JNIEXPORT jstring JNICALL Java_com_logan_dev_ndksampleapp_NdkSampleApp_concatCha
  * Method:    sortInts
  * Signature: ([I)I
  */
-JNIEXPORT jint JNICALL Java_com_logan_dev_ndksampleapp_NdkSampleApp_sortInts
+JNIEXPORT jintArray JNICALL Java_com_logan_dev_ndksampleapp_NdkSampleApp_sortInts
   (JNIEnv *env, jclass cls, jintArray values) {
 
+    jint* pCIntArr;
+    jsize len;
+
+    len = env->GetArrayLength(values);
+    pCIntArr = (jint*) malloc(sizeof(jint) * len);
+    if (pCIntArr == NULL)
+        return NULL;
+
+    memset(pCIntArr, 0, sizeof(jint) * len);
+
+    env->GetIntArrayRegion(values, 0, len, pCIntArr);
+
+    int i, j;
+    LOGD("input values :");
+    for (i = 0; i < len; i++)
+        LOGD("[%d] -> ", *(pCIntArr + i));
+    LOGD("end.");
+
+    for (i = 0; i < len - 1; i++)
+        for (j = 0; j < len - 1 - i; j++)
+            if (pCIntArr[j] > pCIntArr[j + 1])
+                swap(&pCIntArr[j], &pCIntArr[j + 1]);
+
+    LOGD("output values :");
+    for (i = 0; i < len; i++)
+        LOGD("[%d] -> ", pCIntArr[i]);
+    LOGD("end.");
+
+    jintArray ret = env->NewIntArray(len);
+    jint* elems =env->GetIntArrayElements(ret, 0);
+    for (i = 0; i < len; i++)
+        elems[i] = pCIntArr[i];
+    env->ReleaseIntArrayElements(ret, elems, 0);
+    free(pCIntArr);
+
+    return ret;
 }

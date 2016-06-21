@@ -36,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
                 byte[] bytes = { 22, 2, 32, 12 };
                 bytes = NdkSampleApp.sortBytes(bytes);
 
+                int[] ints = { 22, 2, 32, 12 };
+                ints = NdkSampleApp.sortInts(ints);
+
 //                String url = txtUrl.getText().toString();
 //                Log.d("NdkSampleApp", "start ndk");
 //                txtContent.setText(NdkSampleApp.getHtml(url));
