@@ -34,4 +34,14 @@ public class NdkSampleApp {
      */
     public static native int sortInts(int[] values);
 
+    /**
+     * callback java static method
+     */
+    public static native void callJavaStaticMethod();
+
+    /**
+     * callback java method
+     */    
+    public static native void callJavaInstaceMethod();
+    
 }
